@@ -5,11 +5,11 @@
 
 get_header('two'); ?>
 <div class="banner d-flex justify-content-center align-items-center"
-    style="background-color: #0061AB; min-height: 500px;">
-    <h2>Make the payment</h2>
+    style="background-color: #0061AB; min-height: 400px;">
+    <h1>Payment Page</h1>
 </div>
 
-<div class="mb-4" style=" margin-top: -100px;">
+<div class="mb-4" style=" margin-top: -50px;">
     <div class="container">
         <div class="card p-5 shadow-sm">
 
@@ -70,11 +70,55 @@ get_header('two'); ?>
                                 </span>
                             </div>
                         </div>
+                        <div class="col-md-6">
+                            <div class="payment-form-group">
+                                <label>Country of residence
+                                    <b>*</b></label>
+                                <span class="inputfield">
+                                    <select type="text" name="customer_country_of_residence"
+                                        id="customer_country_of_residence" class="form-select form-control payment-input"
+                                        required>
+                                        <option value="" disabled selected>Please select country of residence</option>
+                                    </select>
+                                </span>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="payment-form-group">
+                                <label>Assigned Agent
+                                    <b>*</b></label>
+                                <span class="inputfield">
+                                    <input type="text" name="customer_assigned_agent" class=" form-control payment-input"
+                                        placeholder="Assigned agent name" required>
+
+
+                                </span>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="payment-form-group">
+                                <label>Special Note
+                                </label>
+                                <span class="inputfield">
+                                    <textarea name="customer_special_note" class=" form-control payment-input"
+                                        placeholder="Special note"></textarea>
+                                </span>
+                            </div>
+                        </div>
 
 
                     </div>
+                    <div class="row">
+                        <div class="col-12">
+                            <div class="payment-form-group">
+                                <label for="">Payable amount (in AED) <b>*</b></label>
+                                <input type="text" name="cutomer_payable_amount" id="cutomer_payable_amount"
+                                    class="form-control payment-input payable-amount">
 
+                            </div>
+                        </div>
 
+                    </div>
 
 
 
@@ -88,32 +132,3 @@ get_header('two'); ?>
 </div>
 
 <?php get_footer('two'); ?>
-
-<script>
-    document.addEventListener("DOMContentLoaded", function () {
-        const input = document.querySelector("#customer_phone");
-        window.intlTelInput(input, {
-            initialCountry: "auto",
-            fixDropdownWidth: false,
-            containerClass: "phone-input-container",
-
-            // preferredCountries: ["ae", "sa", "om", "qa", "kw", "bh"],
-            // utilsScript: "https://cdn.jsdelivr.net/npm/intl-tel-input@25.3.1/build/js/utils.js?1587637608293",
-
-        });
-        const nationalitySelect = document.querySelector("#customer_nationality");
-        const countryData = fetch("https://restcountries.com/v3.1/all?name,cca2")
-            .then(response => response.json())
-            .then(countries => {
-                countries.forEach(country => {
-                    const option = document.createElement("option");
-                    option.value = country.cca2.toLowerCase();
-                    option.textContent = country.name.common;
-                    nationalitySelect.appendChild(option);
-                });
-            })
-            .catch(error => console.error("Error fetching countries:", error));
-
-    });
-
-</script>
