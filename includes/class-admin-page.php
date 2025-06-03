@@ -8,9 +8,13 @@ class Admin_Page
     private $option_group = 'telr_settings_group';
     private $option_name_store_id = 'telr_store_id';
     private $option_name_auth_key = 'telr_auth_key';
+    private $option_name_webhook = 'telr_webhook';
+
+    private $plugin_path;
 
     public function __construct()
     {
+        $this->plugin_path = plugin_dir_path(__DIR__);
         add_action('admin_menu', [$this, 'add_admin_menus']);
         add_action('admin_init', [$this, 'register_settings']);
     }
@@ -20,22 +24,22 @@ class Admin_Page
         // Top-level menu page for Telr Payment Gateway
         add_menu_page(
             'Telr Payment Gateway',          // Page title
-            'Telr Settings',                  // Menu title
+            'Telr PG ',                  // Menu title
             'manage_options',                // Capability
             'telr-payment-settings',         // Menu slug
-            [$this, 'telr_payment_page'],    // Callback
+            [$this, 'telr_setting_page'],    // Callback
             'dashicons-cart',                // Icon
             25                              // Position
         );
 
-        // Submenu page (placeholder)
+        // Submenu page (payment)
         add_submenu_page(
             'telr-payment-settings',         // Parent slug
             'Payments',              // Page title
             'Payments',                   // Menu title
             'manage_options',                // Capability
             'telr-payment',              // Menu slug
-            [$this, 'placeholder_page']      // Callback
+            [$this, 'telr_payment_page']      // Callback
         );
     }
 
@@ -43,52 +47,39 @@ class Admin_Page
     {
         register_setting($this->option_group, $this->option_name_store_id);
         register_setting($this->option_group, $this->option_name_auth_key);
+        register_setting($this->option_group, $this->option_name_webhook);
+    }
+
+    public function telr_setting_page()
+    {
+        include $this->plugin_path . 'templates/admin-telr-setting.php';
     }
 
     public function telr_payment_page()
     {
-        ?>
-        <div class="wrap">
-            <h1>Telr Payment Gateway Settings</h1>
-            <form method="post" action="options.php">
-                <?php
-                settings_fields($this->option_group);
-                do_settings_sections($this->option_group);
-                ?>
-                <table class="form-table" role="presentation">
-                    <tbody>
-                        <tr>
-                            <th scope="row"><label for="<?php echo esc_attr($this->option_name_store_id); ?>">Store ID</label>
-                            </th>
-                            <td><input type="text" id="<?php echo esc_attr($this->option_name_store_id); ?>"
-                                    name="<?php echo esc_attr($this->option_name_store_id); ?>"
-                                    value="<?php echo esc_attr(get_option($this->option_name_store_id)); ?>"
-                                    class="regular-text" /></td>
-                        </tr>
-                        <tr>
-                            <th scope="row"><label for="<?php echo esc_attr($this->option_name_auth_key); ?>">Auth Key</label>
-                            </th>
-                            <td><input type="text" id="<?php echo esc_attr($this->option_name_auth_key); ?>"
-                                    name="<?php echo esc_attr($this->option_name_auth_key); ?>"
-                                    value="<?php echo esc_attr(get_option($this->option_name_auth_key)); ?>"
-                                    class="regular-text" /></td>
-                        </tr>
-                    </tbody>
-                </table>
-                <?php submit_button(); ?>
-            </form>
-        </div>
-        <?php
-    }
+        global $wpdb;
+        $table_name = $wpdb->prefix . 'payments';
 
-    public function placeholder_page()
-    {
-        ?>
-        <div class="wrap">
-            <h1>Payments listing </h1>
-            <p>All the payments will be listed here !</p>
-        </div>
-        <?php
+        // Handle insert
+        if (isset($_POST['action']) && $_POST['action'] === 'insert') {
+            $wpdb->insert($table_name, [
+                'cart_id' => sanitize_text_field($_POST['cart_id']),
+                'customer_first_name' => sanitize_text_field($_POST['customer_first_name']),
+                'customer_last_name' => sanitize_text_field($_POST['customer_last_name']),
+                'customer_email' => sanitize_email($_POST['customer_email']),
+                'customer_phone' => sanitize_text_field($_POST['customer_phone']),
+                'customer_nationality' => sanitize_text_field($_POST['customer_nationality']),
+                'customer_country_of_residence' => sanitize_text_field($_POST['customer_country_of_residence']),
+                'customer_assigned_agent' => sanitize_text_field($_POST['customer_assigned_agent']),
+                'customer_special_note' => sanitize_textarea_field($_POST['customer_special_note']),
+                'payable_amount' => floatval($_POST['payable_amount']),
+                'status' => sanitize_text_field($_POST['status']),
+                'reference_number' => sanitize_text_field($_POST['reference_number']),
+            ]);
+
+            echo '<div class="updated"><p>Payment added successfully.</p></div>';
+        }
+        include $this->plugin_path . 'templates/admin-telr-payment.php';
     }
 
 }
