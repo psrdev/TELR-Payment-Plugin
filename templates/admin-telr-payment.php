@@ -19,7 +19,8 @@ $payments = $wpdb->get_results("SELECT * FROM $table_name ORDER BY created_at DE
         <table class="form-table">
             <tr>
                 <th>Cart ID</th>
-                <td><input name="cart_id" required></td>
+                <td><input name="cart_id" required>
+                </td>
             </tr>
             <tr>
                 <th>First Name</th>
@@ -39,11 +40,27 @@ $payments = $wpdb->get_results("SELECT * FROM $table_name ORDER BY created_at DE
             </tr>
             <tr>
                 <th>Nationality</th>
-                <td><input name="customer_nationality"></td>
+                <td><select name="customer_nationality">
+                        <option value="" selected>--select Nationality--</option>
+                        <option value="one">one</option>
+                        <option value="two">two</option>
+                        <option value="three">three</option>
+                        <option value="four">four</option>
+                    </select>
+                </td>
             </tr>
             <tr>
                 <th>Country of Residence</th>
-                <td><input name="customer_country_of_residence"></td>
+                <td>
+                    <select name="customer_country_of_residence">
+                        <option value="" selected>--select country of residence--</option>
+                        <option value="one">one</option>
+                        <option value="two">two</option>
+                        <option value="three">three</option>
+                        <option value="four">four</option>
+
+                    </select>
+                </td>
             </tr>
             <tr>
                 <th>Assigned Agent</th>
@@ -59,7 +76,7 @@ $payments = $wpdb->get_results("SELECT * FROM $table_name ORDER BY created_at DE
             </tr>
             <tr>
                 <th>Status</th>
-                <td><input name="status"></td>
+                <td><input name="status" value="pending" readonly></td>
             </tr>
             <tr>
                 <th>Reference Number</th>
@@ -77,10 +94,10 @@ $payments = $wpdb->get_results("SELECT * FROM $table_name ORDER BY created_at DE
                 <th>Cart ID</th>
                 <th>Name</th>
                 <th>Email</th>
-                <th>Phone</th>
                 <th>Amount</th>
                 <th>Status</th>
                 <th>Created</th>
+                <th>Actions</th>
             </tr>
         </thead>
         <tbody>
@@ -90,10 +107,16 @@ $payments = $wpdb->get_results("SELECT * FROM $table_name ORDER BY created_at DE
                     <td><?= esc_html($payment->cart_id) ?></td>
                     <td><?= esc_html($payment->customer_first_name . ' ' . $payment->customer_last_name) ?></td>
                     <td><?= esc_html($payment->customer_email) ?></td>
-                    <td><?= esc_html($payment->customer_phone) ?></td>
+
                     <td><?= esc_html($payment->payable_amount) ?></td>
                     <td><?= esc_html($payment->status) ?></td>
                     <td><?= esc_html($payment->created_at) ?></td>
+                    <td>
+                        <a
+                            href="<?php echo esc_url(add_query_arg(['action' => 'edit', 'id' => $payment->id], remove_query_arg('paged'))); ?>">Edit</a>
+                        |
+                        <a href="<?php echo esc_url(add_query_arg(['action' => 'delete', 'id' => $payment->id], remove_query_arg('paged'))); ?>"
+                            onclick="return confirm('Are you sure you want to delete this payment?');">Delete</a>
                 </tr>
             <?php endforeach; ?>
         </tbody>
