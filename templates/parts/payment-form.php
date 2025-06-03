@@ -1,3 +1,7 @@
+<?php
+if (!defined('ABSPATH')) {
+    exit;
+} ?>
 <form method="POST">
     <?php wp_nonce_field('submit_telr_payment', 'telr_payment_nonce'); ?>
 
@@ -104,7 +108,7 @@
     <div class="row">
         <div class="col-12">
             <div class="payment-form-group">
-                <label for="">Payable amount (in AED) <b>*</b></label>
+                <label for="cutomer_payable_amount">Payable amount (in AED) <b>*</b></label>
                 <input type="text" name="cutomer_payable_amount" id="cutomer_payable_amount"
                     class="form-control payment-input payable-amount" placeholder="Please input payable amount" required
                     value="<?php echo isset($payment_details->payable_amount) ? esc_attr($payment_details->payable_amount) : ""; ?>"

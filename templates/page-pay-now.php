@@ -33,15 +33,6 @@ $payment_details = $payment_handler->get_payment_details($id);
 
             <?php endif; ?>
         </div>
-        <?php
-        $url = add_query_arg(
-            'id',             // Query parameter key
-            12321,            // Query parameter value
-            home_url('/pay-now/') // Base URL — make sure the page slug ends with a slash
-        );
-        ?>
-        <a href="<?php echo $url ?>"><?php echo $url ?></a>
-
     </div>
 </div>
 

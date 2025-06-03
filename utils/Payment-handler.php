@@ -1,12 +1,28 @@
 <?php
+if (!defined('ABSPATH'))
+    exit;
 class Payment_handler
 {
-    public function get_payment_details($cartId)
+    private $wpdb;
+    private $table;
+    public function __construct()
     {
         global $wpdb;
-        $table_name = $wpdb->prefix . 'payments';
-        $payment = $wpdb->get_row($wpdb->prepare("SELECT * FROM $table_name WHERE cart_id = %d", $cartId));
+        $this->wpdb = $wpdb;
+        $this->table = $wpdb->prefix . 'payments';
+    }
+    public function get_payment_details($cartId)
+    {
+
+
+        $payment = $this->wpdb->get_row($this->wpdb->prepare("SELECT * FROM $this->table WHERE cart_id = %d", $cartId));
         return $payment;
+    }
+    public function insert_payment($data)
+    {
+
+        $result = $this->wpdb->insert($this->table, $data);
+        return $result ? $this->wpdb->insert_id : false;
     }
 
 }
