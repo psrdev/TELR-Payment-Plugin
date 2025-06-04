@@ -31,6 +31,24 @@
                             value="<?php echo esc_attr(get_option($this->option_name_webhook)); ?>"
                             class="regular-text" /></td>
                 </tr>
+                <tr>
+                    <th scope="row"><label for="<?php echo esc_attr($this->option_name_api_url); ?>">TELR API
+                            URL</label>
+                    </th>
+                    <td><input type="text" id="<?php echo esc_attr($this->option_name_api_url); ?>"
+                            name="<?php echo esc_attr($this->option_name_api_url); ?>"
+                            value="<?php echo esc_attr(get_option($this->option_name_api_url)); ?>"
+                            class="regular-text" /></td>
+                </tr>
+                <tr>
+                    <th scope="row"><label for="<?php echo esc_attr($this->option_name_mode); ?>">TELR MODE</label>
+                    </th>
+                    <td><input type="text" id="<?php echo esc_attr($this->option_name_mode); ?>"
+                            name="<?php echo esc_attr($this->option_name_mode); ?>"
+                            value="<?php echo esc_attr(get_option($this->option_name_mode)); ?>" class="regular-text" />
+                        <small>1 for test and 0 for production</small>
+                    </td>
+                </tr>
             </tbody>
         </table>
         <?php submit_button(); ?>

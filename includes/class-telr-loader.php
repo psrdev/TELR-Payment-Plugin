@@ -1,5 +1,6 @@
 <?php
-
+if (!defined('ABSPATH'))
+    exit;
 class Telr_Loader
 {
 
@@ -8,6 +9,7 @@ class Telr_Loader
         new Telr_Assets();
         new Telr_Templates();
         new Admin_Page();
+
         // Future: new Telr_Webhooks();, new Telr_Admin();
     }
 }

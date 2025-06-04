@@ -126,3 +126,26 @@ if (!defined('ABSPATH')) {
 
     <input type="submit" class="btn btn-primary ripple-button" value="Proceed to Pay">
 </form>
+<?php
+require_once
+    TELR_PLUGIN_DIR . 'includes/class-telr-payment-gateway.php';
+$telr_payment_gateway = new Telr_Payment();
+$customer = [
+    'email' => 'test@test.com',
+    'name' => [
+        'forenames' => 'Pravin',
+        'surname' => 'Singh Rana',
+    ],
+    'address' => [
+        'city' => 'xxx',
+        'state' => 'xxx',
+        'country' => 'AE',
+    ],
+    'phone' => '918318658485',
+];
+$amount = "500"; // Amount in AED
+// $res = $telr_payment_gateway->make_payment($amount, $customer);
+// $res = $telr_payment_gateway->generate_cart_id();
+// print_r($res);
+print_r($payment_details);
+?>

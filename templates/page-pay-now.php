@@ -26,8 +26,26 @@ $payment_details = $payment_handler->get_payment_details($id);
 
 
             <?php if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['telr_payment_nonce']) && wp_verify_nonce($_POST['telr_payment_nonce'], 'submit_telr_payment')):
-            // Handle the form submission here (we'll do this in next step)
-        else: ?>
+                echo '<pre>';
+                print_r($_POST);
+                print_r($_POST['phone_full']);
+                require_once plugin_dir_path(__DIR__) . 'utils/Telr_helper.php';
+                $telr_helper = new Telr_helper();
+                echo "<br>";
+                print_r($telr_helper->generate_cart_id());
+                echo '<br>';
+                print ($telr_helper->get_country_from_code('in'));
+
+
+
+
+
+                echo '</pre>';
+
+            else: ?>
+
+
+
 
                 <?php include(plugin_dir_path(__DIR__) . 'templates/parts/payment-form.php'); ?>
 

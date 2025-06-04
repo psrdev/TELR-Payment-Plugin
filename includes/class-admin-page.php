@@ -10,6 +10,8 @@ class Admin_Page
     private $option_name_store_id = 'telr_store_id';
     private $option_name_auth_key = 'telr_auth_key';
     private $option_name_webhook = 'telr_webhook';
+    private $option_name_api_url = 'telr_api_url';
+    private $option_name_mode = 'telr_mode';
 
     private $plugin_path;
 
@@ -49,6 +51,10 @@ class Admin_Page
         register_setting($this->option_group, $this->option_name_store_id);
         register_setting($this->option_group, $this->option_name_auth_key);
         register_setting($this->option_group, $this->option_name_webhook);
+        register_setting($this->option_group, $this->option_name_api_url);
+        register_setting($this->option_group, $this->option_name_mode);
+
+
     }
 
     public function telr_setting_page()
