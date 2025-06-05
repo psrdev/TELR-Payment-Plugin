@@ -14,15 +14,30 @@ class Telr_Payment
     public function __construct()
     {
         // Fetch values from the WordPress Options API
-        $this->auth_token = get_option('telr_auth_key');
-        $this->store_id = get_option('telr_store_id');
-        $this->api_url = get_option('telr_api_url');
-        $this->mode = get_option('telr_mode');
-        $this->webhook_key = get_option('telr_webhook');
-        $this->client_domain = get_site_url(); // Automatically get  WordPress domain
+        $this->auth_token = get_option('telr_auth_key') ?? '';
+        $this->store_id = get_option('telr_store_id') ?? '';
+        $this->api_url = get_option('telr_api_url') ?? '';
+        $this->mode = get_option('telr_mode') ?? '1'; // default mode
+        $this->webhook_key = get_option('telr_webhook') ?? '';
+        $this->client_domain = get_site_url() ?? '';
 
-        if (!$this->auth_token || !$this->store_id || !$this->api_url || $this->mode === null) {
-            throw new Exception("Missing required Telr settings in options.");
+        // Check required settings
+        if (
+            empty($this->auth_token) ||
+            empty($this->store_id) ||
+            empty($this->api_url) ||
+            $this->mode === ''
+        ) {
+            // If in admin panel, show notice
+            if (is_admin()) {
+                add_action('admin_notices', function () {
+                    echo '<div class="notice notice-error"><p><strong>Telr Payment Plugin:</strong> Missing required settings. Please configure the plugin under Settings.</p></div>';
+                });
+            }
+
+            // Log the issue and prevent further usage
+            error_log('Telr Payment Plugin: Missing required configuration values.');
+            return; // Stop execution to avoid fatal error
         }
     }
 
