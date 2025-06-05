@@ -4,6 +4,16 @@ if (!defined('ABSPATH')) {
 } ?>
 <form method="POST">
     <?php wp_nonce_field('submit_telr_payment', 'telr_payment_nonce'); ?>
+    <?php
+    require_once TELR_PLUGIN_DIR . 'utils/Telr-helper.php';
+    $telr_helper = new Telr_Helper();
+    $all_countries = $telr_helper->get_all_countries();
+
+
+    ?>
+
+    <input type="hidden" name="cart_id"
+        value="<?php echo isset($payment_details->cart_id) ? esc_attr($payment_details->cart_id) : ''; ?>">
 
     <div class="row">
         <div class="col-md-6">
@@ -55,10 +65,16 @@ if (!defined('ABSPATH')) {
                     <select type="text" name="customer_nationality" id="customer_nationality"
                         class="form-select form-control payment-input" required>
                         <option
-                            value="<?php echo isset($payment_details->customer_nationality) ? esc_attr($payment_details->customer_nationality) : ""; ?>"
+                            value="<?php echo isset($payment_details->customer_nationality) ? $telr_helper->get_country_code_from_name(esc_attr($payment_details->customer_nationality)) : ""; ?>"
                             selected>
                             <?php echo isset($payment_details->customer_nationality) ? esc_attr($payment_details->customer_nationality) : "Please select your nationality"; ?>
                         </option>
+                        <?php foreach ($all_countries as $country): ?>
+                            <option value="<?php echo esc_attr($country['code']); ?>">
+                                <?php echo esc_html($country['name']); ?>
+                            </option>
+                        <?php endforeach; ?>
+
                     </select>
                 </span>
             </div>
@@ -71,10 +87,15 @@ if (!defined('ABSPATH')) {
                     <select type="text" name="customer_country_of_residence" id="customer_country_of_residence"
                         class="form-select form-control payment-input" required>
                         <option
-                            value="<?php echo isset($payment_details->customer_country_of_residence) ? esc_attr($payment_details->customer_country_of_residence) : ""; ?>"
+                            value="<?php echo isset($payment_details->customer_country_of_residence) ? $telr_helper->get_country_code_from_name(esc_attr($payment_details->customer_country_of_residence)) : ""; ?>"
                             selected>
                             <?php echo isset($payment_details->customer_country_of_residence) ? esc_attr($payment_details->customer_country_of_residence) : "Please select country of residence"; ?>
                         </option>
+                        <?php foreach ($all_countries as $country): ?>
+                            <option value="<?php echo esc_attr($country['code']); ?>">
+                                <?php echo esc_html($country['name']); ?>
+                            </option>
+                        <?php endforeach; ?>
                     </select>
                 </span>
             </div>
@@ -128,7 +149,7 @@ if (!defined('ABSPATH')) {
 </form>
 <?php
 require_once
-    TELR_PLUGIN_DIR . 'includes/class-telr-payment-gateway.php';
+    TELR_PLUGIN_DIR . 'utils/Telr-payment.php';
 $telr_payment_gateway = new Telr_Payment();
 $customer = [
     'email' => 'test@test.com',

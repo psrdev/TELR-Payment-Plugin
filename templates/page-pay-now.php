@@ -12,7 +12,11 @@ get_header('two');
 $id = isset($_GET['id']) ? rtrim($_GET['id'], '/') : null;
 $payment_handler = new Payment_handler();
 $payment_details = $payment_handler->get_payment_details($id);
-
+$payment_status = 'paid';
+if ($payment_status === 'paid') {
+    wp_redirect(home_url('/thank-you'));
+    exit;
+}
 
 ?>
 <div class="banner d-flex justify-content-center align-items-center"
@@ -23,24 +27,17 @@ $payment_details = $payment_handler->get_payment_details($id);
 <div class="mb-4" style=" margin-top: -50px;">
     <div class="container">
         <div class="card p-5 shadow-sm">
-
-
             <?php if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['telr_payment_nonce']) && wp_verify_nonce($_POST['telr_payment_nonce'], 'submit_telr_payment')):
-                echo '<pre>';
+                //    if cart id is not empty get importent payment details from database
                 print_r($_POST);
-                print_r($_POST['phone_full']);
-                require_once plugin_dir_path(__DIR__) . 'utils/Telr_helper.php';
-                $telr_helper = new Telr_helper();
-                echo "<br>";
-                print_r($telr_helper->generate_cart_id());
-                echo '<br>';
-                print ($telr_helper->get_country_from_code('in'));
 
 
 
 
 
-                echo '</pre>';
+
+
+
 
             else: ?>
 
