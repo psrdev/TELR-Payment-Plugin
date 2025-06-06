@@ -41,10 +41,7 @@ class Telr_Payment
         }
     }
 
-    public function generate_cart_id()
-    {
-        return uniqid('', true);
-    }
+
 
     public function make_payment($amount, $customer = [], $cart_id)
     {
@@ -69,7 +66,7 @@ class Telr_Payment
                 'cancelled' => $this->client_domain . '/payment-cancelled',
             ],
         ];
-        // echo "Payload: " . json_encode($payload); // Debugging line
+
 
 
         $response = wp_remote_post($this->api_url, [

@@ -18,7 +18,6 @@ final class Telr_Payment_Plugin
     {
         $this->define_constants();
         $this->autoload_classes();
-
         // Plugin loaded
         add_action('plugins_loaded', [$this, 'init_plugin']);
     }
@@ -75,16 +74,16 @@ final class Telr_Payment_Plugin
         $sql = "CREATE TABLE $table_name (
             id BIGINT(20) UNSIGNED NOT NULL AUTO_INCREMENT,
             cart_id VARCHAR(255) NOT NULL,
-            customer_first_name VARCHAR(100),
-            customer_last_name VARCHAR(100),
-            customer_email VARCHAR(100),
-            customer_phone VARCHAR(50),
-            customer_nationality VARCHAR(100),
-            customer_country_of_residence VARCHAR(100),
-            customer_assigned_agent VARCHAR(100),
-            customer_special_note TEXT,
+            first_name VARCHAR(100),
+            last_name VARCHAR(100),
+            email VARCHAR(100),
+            phone VARCHAR(50),
+            nationality VARCHAR(100),
+            country_of_residence VARCHAR(100),
+            assigned_agent VARCHAR(100),
+            special_note TEXT,
             payable_amount DECIMAL(10,2),
-            status ENUM('pending', 'paid', 'failed', 'cancelled') DEFAULT 'pending',
+            status ENUM('pending', 'paid') DEFAULT 'pending',
             reference_number VARCHAR(255),
             created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
             PRIMARY KEY (id)

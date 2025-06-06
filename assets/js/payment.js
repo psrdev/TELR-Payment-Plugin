@@ -38,22 +38,3 @@ document.addEventListener("DOMContentLoaded", function () {
 
 });
 
-// document.addEventListener("DOMContentLoaded", function () {
-//     (async function () {
-//         const nationalitySelect = document.querySelector("#customer_nationality");
-//         const countryOfResidenceSelect = document.querySelector("#customer_country_of_residence");
-//         const excludeCountries = ["US", "CA", "GB", "AU", "NZ", "IE", "ZA"]; // List of countries to exclude
-//         const countries = await fetchCountries();
-//         countries.forEach(country => {
-//             // Skip excluded countries
-//             if (excludeCountries.includes(country.cca2)) {
-//                 return;
-//             }
-//             const option = document.createElement("option");
-//             option.value = country.cca2.toLowerCase();
-//             option.textContent = country.name.common;
-//             nationalitySelect.appendChild(option);
-//             countryOfResidenceSelect.appendChild(option.cloneNode(true));
-//         });
-//     })();
-// });

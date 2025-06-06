@@ -11,77 +11,39 @@ $payments = $wpdb->get_results("SELECT * FROM $table_name ORDER BY created_at DE
 
 ?>
 
+
 <div class="wrap">
     <h1>Payments</h1>
 
     <form method="post">
         <input type="hidden" name="action" value="insert">
         <table class="form-table">
-            <tr>
-                <th>Cart ID</th>
-                <td><input name="cart_id" required>
-                </td>
-            </tr>
+
             <tr>
                 <th>First Name</th>
-                <td><input name="customer_first_name"></td>
+                <td><input name="first_name"></td>
             </tr>
             <tr>
                 <th>Last Name</th>
-                <td><input name="customer_last_name"></td>
+                <td><input name="last_name"></td>
             </tr>
             <tr>
                 <th>Email</th>
-                <td><input name="customer_email" type="email"></td>
+                <td><input name="email" type="email"></td>
             </tr>
-            <tr>
-                <th>Phone</th>
-                <td><input name="customer_phone"></td>
-            </tr>
-            <tr>
-                <th>Nationality</th>
-                <td><select name="customer_nationality">
-                        <option value="" selected>--select Nationality--</option>
-                        <option value="one">one</option>
-                        <option value="two">two</option>
-                        <option value="three">three</option>
-                        <option value="four">four</option>
-                    </select>
-                </td>
-            </tr>
-            <tr>
-                <th>Country of Residence</th>
-                <td>
-                    <select name="customer_country_of_residence">
-                        <option value="" selected>--select country of residence--</option>
-                        <option value="one">one</option>
-                        <option value="two">two</option>
-                        <option value="three">three</option>
-                        <option value="four">four</option>
 
-                    </select>
-                </td>
-            </tr>
+
             <tr>
-                <th>Assigned Agent</th>
-                <td><input name="customer_assigned_agent"></td>
+                <th>Assigned Agent <b>*</b></th>
+                <td><input name="assigned_agent" required></td>
             </tr>
+
             <tr>
-                <th>Special Note</th>
-                <td><textarea name="customer_special_note"></textarea></td>
+                <th>Payable Amount <b>*</b></th>
+                <td><input name="payable_amount" type="number" required></td>
             </tr>
-            <tr>
-                <th>Payable Amount</th>
-                <td><input name="payable_amount" type="number" step="0.01"></td>
-            </tr>
-            <tr>
-                <th>Status</th>
-                <td><input name="status" value="pending" readonly></td>
-            </tr>
-            <tr>
-                <th>Reference Number</th>
-                <td><input name="reference_number"></td>
-            </tr>
+
+
         </table>
         <p><input type="submit" value="Add Payment" class="button button-primary"></p>
     </form>
@@ -93,6 +55,7 @@ $payments = $wpdb->get_results("SELECT * FROM $table_name ORDER BY created_at DE
                 <th>ID</th>
                 <th>Cart ID</th>
                 <th>Name</th>
+                <th>URL</th>
                 <th>Email</th>
                 <th>Amount</th>
                 <th>Status</th>
@@ -106,11 +69,12 @@ $payments = $wpdb->get_results("SELECT * FROM $table_name ORDER BY created_at DE
                     <td><?= esc_html($payment->id) ?></td>
                     <td><?= esc_html($payment->cart_id) ?></td>
                     <td><?= esc_html($payment->customer_first_name . ' ' . $payment->customer_last_name) ?></td>
+                    <td><?= add_query_arg('id', $payment->cart_id, home_url('/pay-now/')); ?></td>
                     <td><?= esc_html($payment->customer_email) ?></td>
-
                     <td><?= esc_html($payment->payable_amount) ?></td>
                     <td><?= esc_html($payment->status) ?></td>
                     <td><?= esc_html($payment->created_at) ?></td>
+
                     <td>
                         <a
                             href="<?php echo esc_url(add_query_arg(['action' => 'edit', 'id' => $payment->id], remove_query_arg('paged'))); ?>">Edit</a>
