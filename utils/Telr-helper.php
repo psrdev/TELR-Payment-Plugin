@@ -59,7 +59,7 @@ class Telr_helper
 
         $body = wp_remote_retrieve_body($response);
         $data = json_decode($body, true);
-        $exclude = ["US", "CA", "GB", "AU", "NZ", "IE", "ZA"]; // country codes to exclude
+        $exclude = ['IR', 'CU', 'KP', 'SD', 'SS', 'UA', 'SY', 'RU', 'MM', 'YE']; // country codes to exclude
 
         $countries = [];
         foreach ($data as $country) {

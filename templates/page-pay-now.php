@@ -30,14 +30,12 @@ if ($payment_status === 'paid') {
     <div class="container">
         <div class="card p-5 shadow-sm">
             <?php if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['telr_payment_nonce']) && wp_verify_nonce($_POST['telr_payment_nonce'], 'submit_telr_payment')):
-                print_r($_POST);
-                echo '<br>';
-                print_r($payment_details);
+
                 //    if cart id is not empty get importent payment details such as amount and assigned cart id  and assigned agent from the database
-                $cart_id = $payment_details->cart_id ?? '';
+                $cart_id = isset($payment_details->cart_id) ? sanitize_text_field($payment_details->cart_id) : '';
                 if (!empty($cart_id)) {
-                    $payable_amount = $payment_details->payable_amount ?? "";
-                    $assigned_agent = $payment_details->customer_assigned_agent ?? '';
+                    $payable_amount = isset($payment_details->payable_amount) ? sanitize_text_field($payment_details->payable_amount) : '';
+                    $assigned_agent = isset($payment_details->customer_assigned_agent) ? sanitize_text_field($payment_details->customer_assigned_agent) : '';
 
                     // and update other detials from the form
                     $customer_first_name = sanitize_text_field($_POST['customer_first_name']);
@@ -53,7 +51,7 @@ if ($payment_status === 'paid') {
 
                 } else {
                     $cart_id = $payment_handler->generate_cart_id();
-                    $payable_amount = sanitize_text_field($_POST['cutomer_payable_amount']);
+                    $payable_amount = sanitize_text_field($_POST['customer_payable_amount']);
                     $assigned_agent = sanitize_text_field($_POST['customer_assigned_agent'] ?? '');
 
                 }

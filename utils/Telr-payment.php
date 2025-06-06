@@ -46,9 +46,9 @@ class Telr_Payment
         return uniqid('', true);
     }
 
-    public function make_payment($amount, $customer = [])
+    public function make_payment($amount, $customer = [], $cart_id)
     {
-        $cart_id = $this->generate_cart_id();
+
 
         $payload = [
             'method' => 'create',
@@ -64,9 +64,9 @@ class Telr_Payment
             ],
             'customer' => $customer,
             'return' => [
-                'authorised' => $this->client_domain . '/payment-status?status=authorised&ref=' . $cart_id,
-                'declined' => $this->client_domain . '/payment-status?status=declined&ref=' . $cart_id,
-                'cancelled' => $this->client_domain . '/payment-status?status=cancelled&ref=' . $cart_id,
+                'authorised' => $this->client_domain . '/payment-success',
+                'declined' => $this->client_domain . '/payment-failed',
+                'cancelled' => $this->client_domain . '/payment-cancelled',
             ],
         ];
         // echo "Payload: " . json_encode($payload); // Debugging line

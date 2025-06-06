@@ -84,7 +84,7 @@ final class Telr_Payment_Plugin
             customer_assigned_agent VARCHAR(100),
             customer_special_note TEXT,
             payable_amount DECIMAL(10,2),
-            status VARCHAR(50),
+            status ENUM('pending', 'paid', 'failed', 'cancelled') DEFAULT 'pending',
             reference_number VARCHAR(255),
             created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
             PRIMARY KEY (id)
