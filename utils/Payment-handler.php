@@ -18,7 +18,7 @@ class Payment_handler
         $payment = $this->wpdb->get_row($this->wpdb->prepare("SELECT * FROM $this->table WHERE cart_id = %d", $cartId));
         return $payment;
     }
-    public function insert_payment_front($data)
+    public function create_new_payment($data)
     {
 
         $result = $this->wpdb->insert($this->table, $data);
@@ -26,14 +26,11 @@ class Payment_handler
         return $result ? $this->wpdb->insert_id : false;
     }
 
-    public function update_payment_status($cartId, $status)
-    {
 
-    }
-    public function insert_payment_back($data)
+    public function update_payment_by_cart_id($cartId, $data)
     {
-        $result = $this->wpdb->insert($this->table, $data);
-        return $result ? $this->wpdb->insert_id : false;
+        $result = $this->wpdb->update($this->table, $data, ['cart_id' => $cartId]);
+        return $result !== false;
     }
 
 }

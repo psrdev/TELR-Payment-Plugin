@@ -49,7 +49,7 @@ class Telr_helper
     }
     public function get_all_countries()
     {
-        $url = "https://restcountries.com/v3.1/all?name,cca2";
+        $url = "https://restcountries.com/v3.1/independent?status=true";
 
         $response = wp_remote_get($url);
 

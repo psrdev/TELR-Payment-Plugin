@@ -8,8 +8,6 @@ if (!defined('ABSPATH')) {
     require_once TELR_PLUGIN_DIR . 'utils/Telr-helper.php';
     $telr_helper = new Telr_Helper();
     $all_countries = $telr_helper->get_all_countries();
-
-
     ?>
 
     <input type="hidden" name="cart_id"
@@ -107,7 +105,8 @@ if (!defined('ABSPATH')) {
                 <span class="inputfield">
                     <input type="text" name="customer_assigned_agent" class=" form-control payment-input"
                         placeholder="Assigned agent name" required
-                        value="<?php echo isset($payment_details->customer_assigned_agent) ? esc_attr($payment_details->customer_assigned_agent) : ""; ?>">
+                        value="<?php echo isset($payment_details->customer_assigned_agent) ? esc_attr($payment_details->customer_assigned_agent) : ""; ?>"
+                        <?php echo isset($payment_details->customer_assigned_agent) ? 'readonly' : ""; ?>>
 
 
                 </span>
@@ -147,26 +146,3 @@ if (!defined('ABSPATH')) {
 
     <input type="submit" class="btn btn-primary ripple-button" value="Proceed to Pay">
 </form>
-<?php
-require_once
-    TELR_PLUGIN_DIR . 'utils/Telr-payment.php';
-$telr_payment_gateway = new Telr_Payment();
-$customer = [
-    'email' => 'test@test.com',
-    'name' => [
-        'forenames' => 'Pravin',
-        'surname' => 'Singh Rana',
-    ],
-    'address' => [
-        'city' => 'xxx',
-        'state' => 'xxx',
-        'country' => 'AE',
-    ],
-    'phone' => '918318658485',
-];
-$amount = "500"; // Amount in AED
-// $res = $telr_payment_gateway->make_payment($amount, $customer);
-// $res = $telr_payment_gateway->generate_cart_id();
-// print_r($res);
-print_r($payment_details);
-?>
