@@ -166,3 +166,4 @@ register_activation_hook(__FILE__, function () {
 
 // Run on uninstall
 register_uninstall_hook(__FILE__, ['Telr_Payment_Plugin', 'uninstall']);
+

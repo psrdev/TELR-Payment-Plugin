@@ -82,6 +82,15 @@ class Admin_Page
 
             echo '<div class="updated"><p>Payment added successfully.</p></div>';
         }
+        if (isset($_GET['action'], $_GET['id']) && $_GET['action'] === 'delete') {
+            $id = intval($_GET['id']);
+            if (wp_verify_nonce($_GET['_wpnonce'], 'delete_payment_' . $id)) {
+                $wpdb->delete($table_name, ['id' => $id]);
+                echo '<div class="updated"><p>Payment deleted successfully.</p></div>';
+            } else {
+                echo '<div class="error"><p>Security check failed. Deletion aborted.</p></div>';
+            }
+        }
         include $this->plugin_path . 'templates/admin-telr-payment.php';
     }
 

@@ -75,12 +75,21 @@ $payments = $wpdb->get_results("SELECT * FROM $table_name ORDER BY created_at DE
                     <td><?= esc_html($payment->status) ?></td>
                     <td><?= esc_html($payment->created_at) ?></td>
 
-                    <td>
-                        <a
-                            href="<?php echo esc_url(add_query_arg(['action' => 'edit', 'id' => $payment->id], remove_query_arg('paged'))); ?>">Edit</a>
-                        |
-                        <a href="<?php echo esc_url(add_query_arg(['action' => 'delete', 'id' => $payment->id], remove_query_arg('paged'))); ?>"
+                    <td><?php
+                    $delete_url = wp_nonce_url(
+                        add_query_arg([
+                            'action' => 'delete',
+                            'id' => $payment->id,
+                        ], admin_url('admin.php?page=telr-payment')),
+                        'delete_payment_' . $payment->id
+                    );
+                    ?>
+                        <a href="<?= esc_url($delete_url); ?>"
                             onclick="return confirm('Are you sure you want to delete this payment?');">Delete</a>
+                    </td>
+
+
+
                 </tr>
             <?php endforeach; ?>
         </tbody>

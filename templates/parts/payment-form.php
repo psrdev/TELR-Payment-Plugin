@@ -8,11 +8,7 @@ if (!defined('ABSPATH')) {
     require_once TELR_PLUGIN_DIR . 'utils/Telr-helper.php';
     $telr_helper = new Telr_Helper();
     $all_countries = $telr_helper->get_all_countries();
-    print_r($payment_details)
-
-        ?>
-
-
+    ?>
     <input type="hidden" name="cart_id"
         value="<?php echo isset($payment_details->cart_id) ? esc_attr($payment_details->cart_id) : ''; ?>">
 
