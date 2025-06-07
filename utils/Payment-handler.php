@@ -35,8 +35,17 @@ class Payment_handler
     public function get_payment_details($cartId)
     {
 
+        if (empty($cartId)) {
+            return null;
+        }
 
-        $payment = $this->wpdb->get_row($this->wpdb->prepare("SELECT * FROM $this->table WHERE cart_id = %d", $cartId));
+        $payment = $this->wpdb->get_row(
+            $this->wpdb->prepare(
+                "SELECT * FROM $this->table WHERE cart_id = %s",
+                $cartId
+            )
+        );
+
         $this->payment_details = $payment;
         return $payment;
     }
