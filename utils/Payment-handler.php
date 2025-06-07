@@ -59,7 +59,7 @@ class Payment_handler
     public function process_payment($data)
     {
         $cart_id = isset($data['cart_id']) ? sanitize_text_field($data['cart_id']) : null;
-        if (!empty($cart_id)) {
+        if (!empty($cart_id) && isset($this->payment_details->cart_id) && $this->payment_details->cart_id === $cart_id) {
             $this->isprefilled = true; // Set the flag to true if cart_id is provided
         }
         $telr_helper = new Telr_helper();
@@ -76,7 +76,7 @@ class Payment_handler
             'country_of_residence' => isset($data['customer_country_of_residence']) ? $telr_helper->get_country_from_code(sanitize_text_field($data['customer_country_of_residence'])) : '',
             'assigned_agent' => isset($data['customer_assigned_agent']) ? sanitize_text_field($data['customer_assigned_agent']) : '',
             'special_note' => isset($data['customer_special_note']) ? sanitize_textarea_field($data['customer_special_note']) : '',
-            'payable_amount' => $this->isprefilled ? $this->payment_details->payable_amount : sanitize_text_field($data['customer_payable_amount']),
+            'payable_amount' => $this->isprefilled ? $this->payment_details->payable_amount : sanitize_text_field($data['cutomer_payable_amount']),
 
         ];
         $customer = [
@@ -97,6 +97,7 @@ class Payment_handler
             $form_data['cart_id'],
 
         );
+
         if (isset($pgresult['order']['ref'])) {
             $reference_number = $pgresult['order']['ref'];
             $url = $pgresult['order']['url'] ?? '';

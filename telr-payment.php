@@ -59,7 +59,8 @@ final class Telr_Payment_Plugin
     {
         $installed_version = get_option('telr_db_version');
         if ($installed_version !== TELR_DB_VERSION) {
-            self::install(); // Run dbDelta with updated schema if needed
+            self::drop_table();
+            self::install();
             update_option('telr_db_version', TELR_DB_VERSION);
         }
     }
@@ -102,6 +103,12 @@ final class Telr_Payment_Plugin
 
         $wpdb->query("DROP TABLE IF EXISTS $table_name");
         delete_option('telr_db_version');
+    }
+    public static function drop_table()
+    {
+        global $wpdb;
+        $table_name = $wpdb->prefix . 'payments';
+        $wpdb->query("DROP TABLE IF EXISTS $table_name");
     }
 }
 

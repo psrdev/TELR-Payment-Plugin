@@ -70,18 +70,14 @@ class Admin_Page
         // Handle insert
         if (isset($_POST['action']) && $_POST['action'] === 'insert') {
             $wpdb->insert($table_name, [
-                'cart_id' => sanitize_text_field($_POST['cart_id']),
-                'customer_first_name' => sanitize_text_field($_POST['customer_first_name']),
-                'customer_last_name' => sanitize_text_field($_POST['customer_last_name']),
-                'customer_email' => sanitize_email($_POST['customer_email']),
-                'customer_phone' => sanitize_text_field($_POST['customer_phone']),
-                'customer_nationality' => sanitize_text_field($_POST['customer_nationality']),
-                'customer_country_of_residence' => sanitize_text_field($_POST['customer_country_of_residence']),
-                'customer_assigned_agent' => sanitize_text_field($_POST['customer_assigned_agent']),
-                'customer_special_note' => sanitize_textarea_field($_POST['customer_special_note']),
+                'cart_id' => wp_generate_uuid4(),
+                'first_name' => sanitize_text_field($_POST['first_name']),
+                'last_name' => sanitize_text_field($_POST['last_name']) ?? "",
+                'email' => sanitize_email($_POST['email']) ?? "",
+                'assigned_agent' => sanitize_text_field($_POST['assigned_agent']) ?? "",
                 'payable_amount' => floatval($_POST['payable_amount']),
-                'status' => sanitize_text_field($_POST['status']),
-                'reference_number' => sanitize_text_field($_POST['reference_number']),
+
+
             ]);
 
             echo '<div class="updated"><p>Payment added successfully.</p></div>';

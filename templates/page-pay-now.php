@@ -13,8 +13,10 @@ require_once TELR_PLUGIN_DIR . 'utils/Telr-helper.php';
 $telr_helper = new Telr_helper();
 $payment_handler = new Payment_handler();
 // chek if prefilled page is enabled
-$id = isset($_GET['id']) ? rtrim($_GET['id'], '/') : null;
+$id = isset($_GET['id']) ? sanitize_text_field(rtrim($_GET['id'], '/')) : null;
+
 $payment_details = $payment_handler->get_payment_details($id);
+
 $payment_status = $payment_details->payment_status ?? 'pending';
 if ($payment_status === 'paid') {
     wp_redirect(home_url('/alredy-paid'));

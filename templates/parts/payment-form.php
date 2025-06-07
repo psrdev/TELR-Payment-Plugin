@@ -8,7 +8,9 @@ if (!defined('ABSPATH')) {
     require_once TELR_PLUGIN_DIR . 'utils/Telr-helper.php';
     $telr_helper = new Telr_Helper();
     $all_countries = $telr_helper->get_all_countries();
+
     ?>
+
 
     <input type="hidden" name="cart_id"
         value="<?php echo isset($payment_details->cart_id) ? esc_attr($payment_details->cart_id) : ''; ?>">
@@ -20,7 +22,7 @@ if (!defined('ABSPATH')) {
                 <span class="inputfield">
                     <input type="text" name="customer_first_name" class="form-control payment-input"
                         placeholder="Please input first name" required
-                        value="<?php echo isset($payment_details->customer_first_name) ? esc_attr($payment_details->customer_first_name) : ""; ?>">
+                        value="<?php echo isset($payment_details->first_name) ? esc_attr($payment_details->first_name) : ""; ?>">
                 </span>
             </div>
         </div>
@@ -31,7 +33,7 @@ if (!defined('ABSPATH')) {
                 <span class="inputfield">
                     <input type="text" name="customer_last_name" class="form-control payment-input"
                         placeholder="Please input last name" required
-                        value="<?php echo isset($payment_details->customer_last_name) ? esc_attr($payment_details->customer_last_name) : ""; ?>">
+                        value="<?php echo isset($payment_details->last_name) ? esc_attr($payment_details->last_name) : ""; ?>">
                 </span>
             </div>
         </div>
@@ -41,7 +43,7 @@ if (!defined('ABSPATH')) {
                 <span class="inputfield">
                     <input type="email" name="customer_email" class="form-control payment-input"
                         placeholder="Please input your email" required
-                        value="<?php echo isset($payment_details->customer_email) ? esc_attr($payment_details->customer_email) : ""; ?>">
+                        value="<?php echo isset($payment_details->email) ? esc_attr($payment_details->email) : ""; ?>">
                 </span>
             </div>
         </div>
@@ -51,7 +53,7 @@ if (!defined('ABSPATH')) {
                 <span class="inputfield">
                     <input type="text" name="customer_phone" id="customer_phone" class="form-control payment-input"
                         placeholder="Please input phone number" required
-                        value="<?php echo isset($payment_details->customer_phone) ? esc_attr($payment_details->customer_phone) : ""; ?>">
+                        value="<?php echo isset($payment_details->phone) ? esc_attr($payment_details->phone) : ""; ?>">
                 </span>
             </div>
         </div>
@@ -63,9 +65,9 @@ if (!defined('ABSPATH')) {
                     <select type="text" name="customer_nationality" id="customer_nationality"
                         class="form-select form-control payment-input" required>
                         <option
-                            value="<?php echo isset($payment_details->customer_nationality) ? $telr_helper->get_country_code_from_name(esc_attr($payment_details->customer_nationality)) : ""; ?>"
+                            value="<?php echo isset($payment_details->nationality) ? $telr_helper->get_country_code_from_name(esc_attr($payment_details->nationality)) : ""; ?>"
                             selected>
-                            <?php echo isset($payment_details->customer_nationality) ? esc_attr($payment_details->customer_nationality) : "Please select your nationality"; ?>
+                            <?php echo isset($payment_details->nationality) ? esc_attr($payment_details->nationality) : "Please select your nationality"; ?>
                         </option>
                         <?php foreach ($all_countries as $country): ?>
                             <option value="<?php echo esc_attr($country['code']); ?>">
@@ -85,9 +87,9 @@ if (!defined('ABSPATH')) {
                     <select type="text" name="customer_country_of_residence" id="customer_country_of_residence"
                         class="form-select form-control payment-input" required>
                         <option
-                            value="<?php echo isset($payment_details->customer_country_of_residence) ? $telr_helper->get_country_code_from_name(esc_attr($payment_details->customer_country_of_residence)) : ""; ?>"
+                            value="<?php echo isset($payment_details->country_of_residence) ? $telr_helper->get_country_code_from_name(esc_attr($payment_details->country_of_residence)) : ""; ?>"
                             selected>
-                            <?php echo isset($payment_details->customer_country_of_residence) ? esc_attr($payment_details->customer_country_of_residence) : "Please select country of residence"; ?>
+                            <?php echo isset($payment_details->country_of_residence) ? esc_attr($payment_details->country_of_residence) : "Please select country of residence"; ?>
                         </option>
                         <?php foreach ($all_countries as $country): ?>
                             <option value="<?php echo esc_attr($country['code']); ?>">
@@ -105,8 +107,8 @@ if (!defined('ABSPATH')) {
                 <span class="inputfield">
                     <input type="text" name="customer_assigned_agent" class=" form-control payment-input"
                         placeholder="Assigned agent name" required
-                        value="<?php echo isset($payment_details->customer_assigned_agent) ? esc_attr($payment_details->customer_assigned_agent) : ""; ?>"
-                        <?php echo isset($payment_details->customer_assigned_agent) ? 'readonly' : ""; ?>>
+                        value="<?php echo isset($payment_details->assigned_agent) ? esc_attr($payment_details->assigned_agent) : ""; ?>"
+                        <?php echo isset($payment_details->assigned_agent) ? 'readonly' : ""; ?>>
 
 
                 </span>
@@ -118,7 +120,7 @@ if (!defined('ABSPATH')) {
                 </label>
                 <span class="inputfield">
                     <textarea name="customer_special_note" class=" form-control payment-input"
-                        placeholder="Special note"></textarea>
+                        placeholder="Special note"><?php echo isset($payment_details->special_note) ? $payment_details->special_note : "" ?></textarea>
                 </span>
             </div>
         </div>

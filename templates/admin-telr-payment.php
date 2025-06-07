@@ -68,9 +68,9 @@ $payments = $wpdb->get_results("SELECT * FROM $table_name ORDER BY created_at DE
                 <tr>
                     <td><?= esc_html($payment->id) ?></td>
                     <td><?= esc_html($payment->cart_id) ?></td>
-                    <td><?= esc_html($payment->customer_first_name . ' ' . $payment->customer_last_name) ?></td>
+                    <td><?= esc_html($payment->first_name . ' ' . $payment->last_name) ?></td>
                     <td><?= add_query_arg('id', $payment->cart_id, home_url('/pay-now/')); ?></td>
-                    <td><?= esc_html($payment->customer_email) ?></td>
+                    <td><?= esc_html($payment->email) ?></td>
                     <td><?= esc_html($payment->payable_amount) ?></td>
                     <td><?= esc_html($payment->status) ?></td>
                     <td><?= esc_html($payment->created_at) ?></td>
