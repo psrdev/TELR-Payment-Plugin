@@ -18,7 +18,7 @@ final class Telr_Payment_Plugin
     {
         $this->define_constants();
         $this->autoload_classes();
-        // Plugin loaded
+
         add_action('plugins_loaded', [$this, 'init_plugin']);
     }
 
@@ -69,7 +69,6 @@ final class Telr_Payment_Plugin
     {
         global $wpdb;
         $table_name = $wpdb->prefix . 'payments';
-
         $charset_collate = $wpdb->get_charset_collate();
 
         $sql = "CREATE TABLE $table_name (
@@ -96,6 +95,49 @@ final class Telr_Payment_Plugin
         update_option('telr_db_version', TELR_DB_VERSION);
     }
 
+    public static function create_payment_pages()
+    {
+        $pages = [
+            [
+                'title' => 'Pay Now',
+                'slug' => 'pay-now',
+                'template' => 'page-pay-now.php',
+            ],
+            [
+                'title' => 'Payment Successful',
+                'slug' => 'payment-success',
+                'template' => 'page-payment-success.php',
+            ],
+            [
+                'title' => 'Payment Cancelled',
+                'slug' => 'payment-cancel',
+                'template' => 'page-payment-cancel.php',
+            ],
+            [
+                'title' => 'Already Paid',
+                'slug' => 'already-paid',
+                'template' => 'page-already-paid.php',
+            ],
+        ];
+
+        foreach ($pages as $page) {
+            $existing = get_page_by_path($page['slug']);
+            if (!$existing) {
+                $page_id = wp_insert_post([
+                    'post_title' => $page['title'],
+                    'post_name' => $page['slug'],
+                    'post_status' => 'publish',
+                    'post_type' => 'page',
+                    'post_content' => '', // Optional: add default content here
+                ]);
+
+                if (!is_wp_error($page_id)) {
+                    update_post_meta($page_id, '_wp_page_template', $page['template']);
+                }
+            }
+        }
+    }
+
     public static function uninstall()
     {
         global $wpdb;
@@ -104,6 +146,7 @@ final class Telr_Payment_Plugin
         $wpdb->query("DROP TABLE IF EXISTS $table_name");
         delete_option('telr_db_version');
     }
+
     public static function drop_table()
     {
         global $wpdb;
@@ -112,9 +155,14 @@ final class Telr_Payment_Plugin
     }
 }
 
-// Initialize the plugin
+// Initialize plugin
 Telr_Payment_Plugin::get_instance();
 
-// Register activation and uninstall hooks
-register_activation_hook(__FILE__, ['Telr_Payment_Plugin', 'install']);
+// Run on activation
+register_activation_hook(__FILE__, function () {
+    Telr_Payment_Plugin::install();
+    Telr_Payment_Plugin::create_payment_pages(); // Create pages on activation
+});
+
+// Run on uninstall
 register_uninstall_hook(__FILE__, ['Telr_Payment_Plugin', 'uninstall']);
