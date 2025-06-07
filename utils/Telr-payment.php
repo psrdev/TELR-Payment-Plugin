@@ -63,7 +63,7 @@ class Telr_Payment
             'return' => [
                 'authorised' => $this->client_domain . '/payment-success',
                 'declined' => $this->client_domain . '/payment-failed',
-                'cancelled' => $this->client_domain . '/payment-cancelled',
+                'cancelled' => $this->client_domain . '/payment-cancel',
             ],
         ];
 

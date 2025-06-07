@@ -1,17 +1,4 @@
-// async function fetchCountries() {
 
-//     try {
-//         const response = await fetch("https://restcountries.com/v3.1/all?name,cca2");
-//         if (!response.ok) {
-//             throw new Error("Network response was not ok");
-//         }
-//         const countries = await response.json();
-//         return countries;
-//     } catch (error) {
-//         console.error("Error fetching countries:", error);
-//         return [];
-//     }
-// }
 
 document.addEventListener("DOMContentLoaded", function () {
     const input = document.querySelector("#customer_phone");
