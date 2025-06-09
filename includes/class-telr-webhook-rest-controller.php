@@ -49,14 +49,5 @@ class Telr_Webhook_REST_Controller
         ], 200);
 
 
-
-        // wp_send_json_success(['received' => $params]);
-
-
-
-
-
-
-
     }
 }
