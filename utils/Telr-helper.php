@@ -1,4 +1,6 @@
 <?php
+if (!defined('ABSPATH'))
+    exit;
 class Telr_helper
 {
     public function generate_cart_id()

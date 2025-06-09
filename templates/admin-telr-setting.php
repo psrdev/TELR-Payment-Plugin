@@ -1,3 +1,7 @@
+<?php
+if (!defined('ABSPATH'))
+    exit;
+?>
 <div class="wrap">
     <h1>Telr Payment Gateway Settings</h1>
     <form method="post" action="options.php">
