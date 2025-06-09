@@ -15,7 +15,7 @@ class Telr_Webhook_REST_Controller
         register_rest_route('telr/v1', '/webhook', [
             'methods' => 'POST',
             'callback' => [$this, 'handle_webhook'],
-            'permission_callback' => '__return_true', // open to public, adjust if needed
+            'permission_callback' => '__return_true',
         ]);
     }
 
@@ -26,8 +26,10 @@ class Telr_Webhook_REST_Controller
         $params = $request->get_params();
         require_once TELR_PLUGIN_DIR . 'utils/Telr-payment.php';
         require_once TELR_PLUGIN_DIR . 'utils/Payment-handler.php';
+        require_once TELR_PLUGIN_DIR . 'utils/Telr-helper.php';
         $telr_handler = new Payment_handler();
         $telr_payment = new Telr_Payment();
+        $telr_helper = new Telr_Helper();
         if ($telr_payment->sign_data($params)) {
             if (isset($params['tran_status']) && $params['tran_status'] === 'A') {
                 $telr_handler->update_payment_by_cart_id(
@@ -36,6 +38,7 @@ class Telr_Webhook_REST_Controller
                         'status' => "paid",
                     ]
                 );
+                $telr_helper->send_payment_email($params);
             }
 
         }

@@ -1,10 +1,9 @@
 <!DOCTYPE html>
 <html>
-
-<head>
-    <meta charset="UTF-8">
-    <title>Payment Confirmation | Outmazed Design</title>
-    <style>
+    <head>
+        <meta charset="UTF-8">
+        <title>Payment Confirmation | Outmazed Design</title>
+        <style>
         body {
             font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
             background-color: #f4f7fa;
@@ -23,7 +22,7 @@
         }
 
         .header {
-            background-color: #f47a57;
+            background-color: #0061AB;
             padding: 30px;
             text-align: center;
         }
@@ -89,43 +88,36 @@
             height: 24px;
             vertical-align: middle;
         }
-    </style>
-</head>
-
-<body>
-    <div class="container">
-        <div class="header">
-            <img src="https://backend.outmazedtourism.com/uploads/omd_logo_5669841a86.png" alt="Outmazed Design Logo"
-                class="logo">
-        </div>
-        <div class="main">
-            <h1>Payment Successful!</h1>
-            <div class="content">
-                <p>
-                    Thank you for your payment!
-                    <br>
-                    Your transaction with
-                    <strong>Outmazed </strong>
-                    has been completed successfully.
-                </p>
-                <div class="order-summary">
+        </style>
+    </head>
+    <body>
+        <div class="container">
+            <div class="header">
+                <img src="https://www.outmazedtourism.com/wp-content/uploads/2024/11/New-Logo-R-white.png" alt="Outmazed Tourism Logo" class="logo">
+            </div>
+            <div class="main">
+                <h1>Payment Successful!</h1>
+                <div class="content">
                     <p>
-                        Hi {{fullName}},
+                        Thank you for your payment!
+                        <br>
+                        Your transaction with
+                        <strong>Outmazed</strong>
+                        has been completed successfully.
+                    </p>
+                    <div class="order-summary">
+                        <p>
+                            Hi {{fullName}},
 
                         We’re pleased to confirm that we’ve received your payment of {{payment_amount}} on
                         {{payment_date}}
-                        </br>
-
-
+                            </br>
+                        </div>
+                        <p>
+                            <a href="mailto:info@outmazedtourism.com">info@outmazedtourism.com</a>
+                        </p>
+                    </div>
                 </div>
-                <p>
-
-                    <a href="mailto:info@outmazedtourism.com">info@outmazedtourism.com</a>
-                </p>
             </div>
-        </div>
-
-    </div>
-</body>
-
-</html>
+        </body>
+    </html>

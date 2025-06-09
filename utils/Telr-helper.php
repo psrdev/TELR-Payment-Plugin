@@ -76,4 +76,32 @@ class Telr_helper
 
         return $countries;
     }
+    public function send_payment_email($data)
+    {
+        $subject = 'Payment Confirmation | Outmazed Design';
+        $headers = ['Content-Type: text/html; charset=UTF-8'];
+
+        $template_path = TELR_PLUGIN_DIR . 'templates/mail/payment_confirm.html';
+
+        if (!file_exists($template_path)) {
+            error_log('Email template not found');
+            return false;
+        }
+
+        $template = file_get_contents($template_path);
+
+        // Optional: Format date nicely
+        $formatted_date = date('F j, Y, g:i a', strtotime($data['actual_payment_date']));
+
+        $placeholders = [
+            '{{fullName}}' => esc_html($data['bill_fname'] . ' ' . $data['bill_sname']),
+            '{{payment_amount}}' => esc_html($data['tran_amount'] . ' ' . $data['tran_currency']),
+            '{{payment_date}}' => esc_html($formatted_date),
+        ];
+
+        $message = strtr($template, $placeholders);
+        $to = sanitize_email($data['bill_email']);
+
+        return wp_mail($to, $subject, $message, $headers);
+    }
 }
