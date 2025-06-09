@@ -65,6 +65,7 @@ class Payment_handler
         $result = $this->wpdb->update($this->table, $data, ['cart_id' => $cartId]);
         return $result !== false;
     }
+
     public function process_payment($data)
     {
         $cart_id = isset($data['cart_id']) ? sanitize_text_field($data['cart_id']) : null;

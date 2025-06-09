@@ -24,25 +24,24 @@ class Admin_Page
 
     public function add_admin_menus()
     {
-        // Top-level menu page for Telr Payment Gateway
         add_menu_page(
-            'Telr Payment Gateway',          // Page title
-            'Telr PG ',                  // Menu title
-            'manage_options',                // Capability
-            'telr-payment-settings',         // Menu slug
-            [$this, 'telr_setting_page'],    // Callback
-            'dashicons-cart',                // Icon
-            25                              // Position
+            'Telr Payments',               // Page title
+            'Telr Payments',               // Menu title
+            'manage_options',              // Capability
+            'telr-payment',                // Menu slug (make this the main)
+            [$this, 'telr_payment_page'],  // Callback function
+            'dashicons-cart',              // Icon
+            25                             // Position
         );
 
-        // Submenu page (payment)
+        // Add "Settings" as a submenu page
         add_submenu_page(
-            'telr-payment-settings',         // Parent slug
-            'Payments',              // Page title
-            'Payments',                   // Menu title
-            'manage_options',                // Capability
-            'telr-payment',              // Menu slug
-            [$this, 'telr_payment_page']      // Callback
+            'telr-payment',                // Parent slug
+            'Telr Settings',               // Page title
+            'Settings',                    // Menu title
+            'manage_options',              // Capability
+            'telr-payment-settings',       // Menu slug
+            [$this, 'telr_setting_page']   // Callback function
         );
     }
 
