@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <title>Payment Confirmation | Outmazed Design</title>
+    <style>
+        body {
+            font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+            background-color: #f4f7fa;
+            color: #4a4a4a;
+            margin: 0;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 600px;
+            margin: 0 auto;
+            background-color: #ffffff;
+            border-radius: 10px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+        }
+
+        .header {
+            background-color: #f47a57;
+            padding: 30px;
+            text-align: center;
+        }
+
+        .logo {
+            max-width: 150px;
+            height: auto;
+        }
+
+        .main {
+            padding: 30px;
+            text-align: center;
+        }
+
+        h1 {
+            color: #2c3e50;
+            font-size: 24px;
+            margin-bottom: 15px;
+        }
+
+        .content p {
+            font-size: 16px;
+            margin-bottom: 10px;
+            line-height: 1.6;
+        }
+
+        .order-summary {
+            text-align: left;
+            border-top: 1px solid #e1e4e8;
+            padding-top: 15px;
+            margin-top: 20px;
+        }
+
+        .footer {
+            font-size: 12px;
+            color: #a4a4a4;
+            text-align: center;
+            padding: 20px 10px;
+            border-top: 1px solid #e1e4e8;
+        }
+
+        .btn {
+            display: inline-block;
+            margin-top: 20px;
+            padding: 10px 20px;
+            background-color: #2c3e50;
+            color: #ffffff;
+            text-decoration: none;
+            border-radius: 5px;
+        }
+
+        .social-icons {
+            margin-top: 20px;
+        }
+
+        .social-icons a {
+            display: inline-block;
+            margin: 0 6px;
+        }
+
+        .social-icons img {
+            width: 24px;
+            height: 24px;
+            vertical-align: middle;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <div class="header">
+            <img src="https://backend.outmazedtourism.com/uploads/omd_logo_5669841a86.png" alt="Outmazed Design Logo"
+                class="logo">
+        </div>
+        <div class="main">
+            <h1>Payment Successful!</h1>
+            <div class="content">
+                <p>
+                    Thank you for your payment!
+                    <br>
+                    Your transaction with
+                    <strong>Outmazed </strong>
+                    has been completed successfully.
+                </p>
+                <div class="order-summary">
+                    <p>
+                        Hi {{fullName}},
+
+                        We’re pleased to confirm that we’ve received your payment of {{payment_amount}} on
+                        {{payment_date}}
+                        </br>
+
+
+                </div>
+                <p>
+
+                    <a href="mailto:info@outmazedtourism.com">info@outmazedtourism.com</a>
+                </p>
+            </div>
+        </div>
+
+    </div>
+</body>
+
+</html>
