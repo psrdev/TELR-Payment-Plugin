@@ -13,46 +13,50 @@ class Telr_Webhook_REST_Controller
     public function register_routes()
     {
         register_rest_route('telr/v1', '/webhook', [
-            'methods' => 'GET',
+            'methods' => 'POST',
             'callback' => [$this, 'handle_webhook'],
             'permission_callback' => '__return_true', // open to public, adjust if needed
         ]);
     }
 
+
     public function handle_webhook(WP_REST_Request $request)
     {
-        // global $wpdb;
+        global $wpdb;
+        $params = $request->get_params();
+        require_once TELR_PLUGIN_DIR . 'utils/Telr-payment.php';
+        require_once TELR_PLUGIN_DIR . 'utils/Payment_handler.php';
+        $telr_handler = new Payment_handler();
+        $telr_payment = new Telr_Payment();
+        if ($telr_payment->sign_data($params)) {
+            if (isset($params['tran_status']) && $params['tran_status'] === 'A') {
+                $telr_handler->update_payment_by_cart_id(
+                    $params['tran_cartid'],
+                    [
+                        'status' => "paid",
 
-        // $cart_id = sanitize_text_field($request->get_param('cart_id'));
-        // $status = sanitize_text_field($request->get_param('status'));
+                    ]
+                );
 
-        // if (empty($cart_id) || empty($status)) {
-        //     return new WP_REST_Response(['error' => 'Missing cart_id or status'], 400);
-        // }
+            }
 
-        // $table = $wpdb->prefix . 'payments';
 
-        // $updated = $wpdb->update($table, [
-        //     'status' => $status,
-        // ], ['cart_id' => $cart_id]);
+        }
 
-        // if ($updated === false) {
-        //     return new WP_REST_Response(['error' => 'Database update failed'], 500);
-        // }
+        return new WP_REST_Response([
+            'success' => true,
+            'message' => 'Webhook processed successfully',
+        ], 200);
 
-        // $payment = $wpdb->get_row($wpdb->prepare("SELECT * FROM $table WHERE cart_id = %s", $cart_id));
 
-        // if ($payment && is_email($payment->email)) {
-        //     wp_mail(
-        //         $payment->email,
-        //         'Payment Status Updated',
-        //         "Hello {$payment->first_name},\n\nYour payment status is now: {$status}.\n\nThank you."
-        //     );
-        // }
 
-        // return new WP_REST_Response([
-        //     'success' => true,
+        // wp_send_json_success(['received' => $params]);
 
-        // ], 200);
+
+
+
+
+
+
     }
 }
