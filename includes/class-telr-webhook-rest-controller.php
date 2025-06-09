@@ -25,7 +25,7 @@ class Telr_Webhook_REST_Controller
         global $wpdb;
         $params = $request->get_params();
         require_once TELR_PLUGIN_DIR . 'utils/Telr-payment.php';
-        require_once TELR_PLUGIN_DIR . 'utils/Payment_handler.php';
+        require_once TELR_PLUGIN_DIR . 'utils/Payment-handler.php';
         $telr_handler = new Payment_handler();
         $telr_payment = new Telr_Payment();
         if ($telr_payment->sign_data($params)) {
@@ -34,18 +34,15 @@ class Telr_Webhook_REST_Controller
                     $params['tran_cartid'],
                     [
                         'status' => "paid",
-
                     ]
                 );
-
             }
-
 
         }
 
         return new WP_REST_Response([
             'success' => true,
-            'message' => 'Webhook processed successfully',
+
         ], 200);
 
 
