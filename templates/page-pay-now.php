@@ -18,11 +18,12 @@ if (!empty($id)) {
     $payment_details = $payment_handler->get_payment_details($id);
 }
 $payment_details = $payment_handler->get_payment_details($id);
-$payment_status = $payment_details->payment_status ?? 'pending';
+$payment_status = $payment_details->status ?? 'pending';
 if ($payment_status === 'paid') {
-    wp_redirect(home_url('/alredy-paid'));
+    wp_redirect(home_url('/already-paid/'));
     exit;
 }
+
 
 if ($payment_handler->form_submitted()) {
     $payment_handler->process_payment($_POST);

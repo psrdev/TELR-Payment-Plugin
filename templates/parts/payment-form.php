@@ -100,10 +100,10 @@ if (!defined('ABSPATH')) {
         <div class="col-md-6">
             <div class="payment-form-group">
                 <label>Assigned Agent
-                    <b>*</b></label>
+                </label>
                 <span class="inputfield">
                     <input type="text" name="customer_assigned_agent" class=" form-control payment-input"
-                        placeholder="Assigned agent name" required
+                        placeholder="Assigned agent name"
                         value="<?php echo isset($payment_details->assigned_agent) ? esc_attr($payment_details->assigned_agent) : ""; ?>"
                         <?php echo isset($payment_details->assigned_agent) ? 'readonly' : ""; ?>>
 
