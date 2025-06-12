@@ -24,14 +24,9 @@ if ($payment_status === 'paid') {
     exit;
 }
 
-
 if ($payment_handler->form_submitted()) {
     $payment_handler->process_payment($_POST);
 }
-
-
-
-
 
 get_header('two');
 

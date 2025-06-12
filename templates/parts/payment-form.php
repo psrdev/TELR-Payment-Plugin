@@ -105,7 +105,7 @@ if (!defined('ABSPATH')) {
                     <input type="text" name="customer_assigned_agent" class=" form-control payment-input"
                         placeholder="Assigned agent name"
                         value="<?php echo isset($payment_details->assigned_agent) ? esc_attr($payment_details->assigned_agent) : ""; ?>"
-                        <?php echo isset($payment_details->assigned_agent) ? 'readonly' : ""; ?>>
+                        <?php echo (isset($payment_details->assigned_agent) && !empty($payment_details->assigned_agent)) ? 'readonly' : ""; ?>>
 
 
                 </span>
